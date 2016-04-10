@@ -18,6 +18,11 @@ app.listen(process.env.PORT || 3412);
 app.get('/', function(req, res) {
   res.json(notes);
 });
+app.get('/note/', function(req, res) {
+  
+  var q = notes[0];
+  res.json(q);
+});
 
 app.get('/note/random', function(req, res) {
   var id = Math.floor(Math.random() * notes.length);
@@ -38,14 +43,13 @@ var q = notes[req.params.id];
 // .use(express.json());
 
 app.post('/note', function(req, res) {
-  if(!req.body.hasOwnProperty('author') ||
+  if(
      !req.body.hasOwnProperty('text')) {
     res.statusCode = 400;
     return res.send('Error 400: Post syntax incorrect.');
   }
 
 var newnote = {
-    author : req.body.author,
     text : req.body.text
   };
 
@@ -55,7 +59,7 @@ var newnote = {
   // text: lasdjkfasdf,
   //}
 
-notes.push(newnote);
+notes[0]=newnote;
   res.json(true);
 });
 
